@@ -1,7 +1,7 @@
 
 # Three.js Earth
 
-This is my first threejs porject where i made the Earth
+This is my first threejs project where i made the Earth
 
 
 ## Authors

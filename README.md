@@ -10,6 +10,5 @@ This is my first threejs porject where i made the Earth
 
 
 ## Screenshots
-![Screenshot of Project]("./Screenshot 2024-11-04 103829.png")
-
+![Screenshot of Project](https://github.com/hunjager/threejs-earth/blob/master/Screenshot%202024-11-04%20103829.png)
 

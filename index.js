@@ -7,7 +7,7 @@ import getStarfield from "./src/getStarfield.js";
 const w = window.innerWidth;
 const h = window.innerHeight;
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(55, w / h, 0.1, 1000);
 camera.position.z = 4
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(w, h);
@@ -30,6 +30,7 @@ const material = new THREE.MeshPhongMaterial({
   bumpScale: 0.015
 });
 
+const moonGroup  = new THREE.Group()
 const earthMesh = new THREE.Mesh(geometry, material);
 earthGroup.add(earthMesh);
 
@@ -50,9 +51,21 @@ const cloudsMesh = new THREE.Mesh(geometry, cloudsMat);
 cloudsMesh.scale.setScalar(1.003);
 earthGroup.add(cloudsMesh);
 
+const texture = new THREE.TextureLoader();
+const moonGeo = new THREE.IcosahedronGeometry(1,12)
+const moonMat = new THREE.MeshStandardMaterial({
+    map:texture.load("/textures/moonmap4k.jpg"),
+    bumpMap: texture.load('/textures/moonbump4k.jpg'),
+    bumpScale: 0.05
+})
+const moonMesh = new THREE.Mesh(moonGeo,moonMat)
+moonMesh.scale.setScalar(0.27);
+moonMesh.position.set(3,0,0);
+moonGroup.add(moonMesh);
+scene.add(moonGroup)
 
 
-const stars = getStarfield({numStars: 10000});
+const stars = getStarfield({numStars: 20000});
 scene.add(stars);
 
 const sunLight = new THREE.DirectionalLight(0xffffff, 2.0);
@@ -63,6 +76,7 @@ function animate() {
   requestAnimationFrame(animate);
 
   earthMesh.rotation.y += 0.002;
+  moonGroup.rotation.y += 0.001;
   lightsMesh.rotation.y += 0.002;
   cloudsMesh.rotation.y += 0.0023;
   stars.rotation.y -= 0.0002;
@@ -76,4 +90,4 @@ function handleWindowResize () {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
-window.addEventListener('resize', handleWindowResize, false);
+window.addEventListener('resize', handleWindowResize, false); 
